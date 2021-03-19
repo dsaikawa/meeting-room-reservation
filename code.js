@@ -19,8 +19,12 @@ function doPost (e){
     }
   
   }else if (!str.indexOf('add')){
+<<<<<<< HEAD
     d = /(?<command>[^ ]+)($|\s+)((?<roomName>[^ ]+))($|\s+(?<day>(\d{4}-\d{2}-\d{2})))($|\s+(?<startTime>\d{1,2}:\d{2})-(?<endTime>\d{1,2}:\d{2}))\s+(("(?<title1>[^"]+)")|(?<title2>[^ ]+))\s+(((?<name1>\([^"]+\)))|(?<name2>[^ ]+))/
     f = /(?<command>[^ ]+)($|\s+)((?<roomName>[^ ]+))($|\s+(?<day>(\d{4}-\d{2}-\d{2})))($|\s+(?<startTime>\d{1,2}:\d{2})-(?<endTime>\d{1,2}:\d{2}))\s+(("(?<title1>[^"]+)")|(?<title2>[^ ]+))/
+=======
+    d = /(?<command>[^ ]+)($|\s+)((?<roomName>[^ ]+))($|\s+(?<day>(\d{4}-\d{2}-\d{2})))($|\s+(?<startTime>\d{1,2}:\d{2})-(?<endTime>\d{1,2}:\d{2}))\s+(("(?<title1>[^"]+)")|(?<title2>[^ ]+))\s+(("(?<name1>[^"]+)")|(?<name2>[^ ]+))/
+>>>>>>> 40d3a3233554d525e64f2cc1069c1708511acf95
 
     if (str.match(d)){
       const strGroup = str.match(d).groups
@@ -30,6 +34,7 @@ function doPost (e){
       strGroup.name = name
       if (isDate(strGroup.day) == 0) return ContentService.createTextOutput(str + '\n入力した日付を確認して下さい。')
       if (isTime(strGroup.startTime,strGroup.endTime) == 0) return ContentService.createTextOutput(str + '\n入力した時刻を確認して下さい。')
+<<<<<<< HEAD
            
       return addRoom(strGroup)
 
@@ -41,6 +46,15 @@ function doPost (e){
       if (isTime(strGroup.startTime,strGroup.endTime) == 0) return ContentService.createTextOutput(str + '\n入力した時刻を確認して下さい。')
            
       return addRoom(strGroup)
+=======
+      
+      
+      return addRoom(strGroup)
+
+
+    }else{
+      return ContentService.createTextOutput(str + '\n入力を確認してください')
+>>>>>>> 40d3a3233554d525e64f2cc1069c1708511acf95
     }
 
   }else if (!str.indexOf('help')){
@@ -94,12 +108,16 @@ function addRoom (strGroup) {
   strGroup.roomName = roomdata[2]
 
   const calendar = CalendarApp.getCalendarById(calendarId)
+<<<<<<< HEAD
   let title
   if (strGroup.name == undefined){
     title = strGroup.title
   }else{
     title = strGroup.title + ' ' +strGroup.name
   }
+=======
+  const title = strGroup.title + '（' +strGroup.name + '）'
+>>>>>>> 40d3a3233554d525e64f2cc1069c1708511acf95
   const startTime = new Date(strGroup.day + ' ' + strGroup.startTime)
   const endTime = new Date(strGroup.day + ' ' + strGroup.endTime)
   calendar.createEvent(title, startTime, endTime)
